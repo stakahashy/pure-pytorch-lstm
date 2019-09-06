@@ -128,8 +128,6 @@ if __name__ == '__main__':
     lstm.cuda()
     true_lstm = nn.LSTM(features,hiddendim,num_layers=num_layers,batch_first= batch_first)
     hidden = (torch.zeros(num_layers,batchsize,hiddendim),torch.zeros(num_layers,batchsize,hiddendim))
-    weight_hh = true_lstm.weight_hh_l0
-    weight_ih = true_lstm.weight_ih_l0
     for i in range(len(lstm.lstm_cells)):
         lstm.lstm_cells[i].i2h.weight = getattr(true_lstm,'weight_ih_l%i'%i)
         lstm.lstm_cells[i].h2h.weight = getattr(true_lstm,'weight_hh_l%i'%i)
